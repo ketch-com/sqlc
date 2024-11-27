@@ -241,6 +241,7 @@ func pluginQueryColumn(c *compiler.Column) *plugin.Column {
 		Length:       int32(l),
 		IsNamedParam: c.IsNamedParam,
 		IsFuncCall:   c.IsFuncCall,
+		IsSqlcSlice:  c.IsSqlcSlice,
 	}
 
 	if c.Type != nil {
@@ -260,6 +261,14 @@ func pluginQueryColumn(c *compiler.Column) *plugin.Column {
 			Catalog: c.Table.Catalog,
 			Schema:  c.Table.Schema,
 			Name:    c.Table.Name,
+		}
+	}
+
+	if c.EmbedTable != nil {
+		out.EmbedTable = &plugin.Identifier{
+			Catalog: c.EmbedTable.Catalog,
+			Schema:  c.EmbedTable.Schema,
+			Name:    c.EmbedTable.Name,
 		}
 	}
 
